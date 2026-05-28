@@ -4,6 +4,7 @@ import com.hms.backend.auth.dto.RegisterRequest;
 import com.hms.backend.auth.dto.RegisterResponse;
 import com.hms.backend.auth.entity.User;
 import com.hms.backend.auth.repository.UserRepository;
+import com.hms.backend.common.exception.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class AuthService {
 
         // check if email already exists
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already registered");
+           throw new ResourceAlreadyExistsException("Email already registered");
         }
 
         // create user object
