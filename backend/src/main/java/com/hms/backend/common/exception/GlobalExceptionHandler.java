@@ -56,4 +56,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
+            ResourceNotFoundException ex) {
+
+//        ApiErrorResponse error = ApiErrorResponse.builder()
+//                .status(HttpStatus.NOT_FOUND.value())
+//                .message(ex.getMessage())
+//                .timestamp(LocalDateTime.now())
+//                .build();
+
+        ApiErrorResponse error = new ApiErrorResponse(
+                ex.getMessage(),HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 }
